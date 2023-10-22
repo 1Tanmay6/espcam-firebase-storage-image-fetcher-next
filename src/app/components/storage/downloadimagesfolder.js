@@ -10,11 +10,11 @@ function getDownloadUrls() {
   return folderRef
     .listAll()
     .then((res) => {
-      const downloadUrls = [];
-
       return Promise.all(
         res.items.map((itemRef) => {
-          return itemRef.getDownloadURL();
+          return itemRef.getDownloadURL().then((url) => {
+            return url + "?t=" + new Date().getTime();
+          });
         })
       );
     })
